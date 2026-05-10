@@ -109,43 +109,6 @@ export default function DashboardLayout({
         </header>
 
         <div className="p-8">
-          {generatedQuestions.length > 0 && (
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="mb-12"
-            >
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold font-outfit">Generated Quiz Preview</h2>
-                <button 
-                  onClick={() => setGeneratedQuestions([])}
-                  className="text-slate-500 hover:text-white text-sm"
-                >
-                  Clear Results
-                </button>
-              </div>
-              <div className="space-y-4">
-                {generatedQuestions.map((q, i) => (
-                  <div key={i} className="p-6 rounded-2xl bg-slate-900 border border-slate-800">
-                    <p className="text-lg font-bold mb-4">{i + 1}. {q.question}</p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      {q.options.map((opt: string, j: number) => (
-                        <div key={j} className={`p-3 rounded-xl border ${opt === q.correct_answer ? 'border-green-500/50 bg-green-500/10 text-green-400' : 'border-slate-800 bg-slate-950 text-slate-400'}`}>
-                          {opt}
-                        </div>
-                      ))}
-                    </div>
-                    {q.explanation && (
-                      <p className="mt-4 text-sm text-slate-500 italic">
-                        <span className="text-indigo-400 font-bold not-italic">Why: </span>{q.explanation}
-                      </p>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          )}
-
           {children}
         </div>
       </main>
