@@ -1,0 +1,66 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: ./apps/backend
+    container_name: elearning_backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./apps/backend:/app
+      - /app/.venv
+    env_file:
+      - ./apps/backend/.env
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/elearning_db
+
+  frontend:
+    build:
+      context: ./apps/web
+    container_name: elearning_frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./apps/web:/app
+      - /app/node_modules
+      - /app/.next
+    depends_on:
+      - backend
+    command: npm run dev
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: elearning_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: elearning_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    container_name: elearning_redis
+    ports:
+      - "6379:6379"
+
+  nginx:
+    image: nginx:latest
+    container_name: elearning_nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./infrastructure/nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - frontend
+      - backend
+
+volumes:
+  postgres_data:
