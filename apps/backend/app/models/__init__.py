@@ -1,13 +1,1 @@
-from app.models.base import Base
-from app.models.user import User
-from app.models.subject import Subject
-from app.models.course import Course
-from app.models.lesson import Lesson
-from app.models.quiz import Quiz
-from app.models.question import Question
-from app.models.question_option import QuestionOption
-from app.models.quiz_attempt import QuizAttempt
-from app.models.quiz_answer import QuizAnswer
-from app.models.subscription import Subscription
-from app.models.usage_tracking import UsageTracking
-from app.models.analytics import AnalyticsEvent
+# Initialization for models package
